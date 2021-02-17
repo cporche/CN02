@@ -1,0 +1,211 @@
+REM Uploaded from Canoo on 2/15/2021 3:38:05 PM
+REM #line 0 "C:\Users\tonyn\Desktop\cn02_2_10_2021_2.bas"
+REM Uploaded from Canoo on 2/10/2021 5:05:55 PM
+REM #line 0 "C:\Users\tonyn\Desktop\test_2.bas"
+REM Uploaded from Canoo on 2/10/2021 5:01:08 PM
+REM #line 0 "C:\Users\tonyn\Documents\kollmorgen_2_2_2021.bas"
+REM Uploaded from Canoo on 2/2/2021 3:29:18 PM
+REM #line 0 "D:\CN02 ROTOR DROP KOLLMORGEN PROGRAM\CN02_KOLLMORGEN.bas"
+REM Uploaded from Canoo on 2/1/2021 4:53:25 PM
+REM #line 0 "C:\Users\Dynamc\Documents\nexex.bas"
+REM Uploaded from Canoo on 12/31/2020 5:21:48 PM
+REM #line 0 "C:\Users\Justin Osborn\Desktop\Nexus\Canoo\2117 Rotor Drop Assembly\PROGRAMS\DRIVE\ARCHIVE\Canoo_DRV_kamantest.bas"
+'-------------- Device Params -----------------------
+Params
+End Params
+
+'-------------- Define (dim) Global Variables --------
+Dim HomeSpeed, BackoffSpeed, HomeDir, HomeOffset as integer
+Dim accel, HomingAccel as integer
+Dim decel, HomingDecel as integer
+Dim pos0, pos1 as integer
+Dim SystemSpeed, abort as integer
+Dim volt_Low, volt_High, Amp_Low, Amp_High as float
+Dim Amp_Out, A_In as float
+alias HOME_SYSTEM = (DIN1.STATE = 1)
+alias START_PRESS = (DIN2.State = 1)
+Alias Start_ThreePOS = (DIN3.STATE=1)
+'-------------- Main Program -------------------------
+Main
+	DRV.SWENABLE = 1									'Disable drive while system is starting
+			
+	While(1):
+		Call initSYSTEM									'Inits the drive with all the preset values
+	
+		Call HomeSystem									'Starts the homing routine
+	
+		while(abort = 0):								'forever loop
+			If HOME_SYSTEM Then Call HomeSystem		'Can rehome the system if the customer wants to	
+			If Start_ThreePOS Then Call ThreePOS
+		Wend
+	Wend
+End Main
+
+'-------------- Subroutines and Functions ------------
+
+'This is where you edit all the parameters of the system
+Sub initSYSTEM
+	'Edit these for reference on your system
+	'Positive direction is down
+	'IN1	Home System
+	'IN2	Extend Press
+	'IN3	Retract Press
+	'IN4	NC (setup interrupt for stop)
+	'IN5	Pos Limit Sensor
+	'IN6	Neg Limit Sensor
+	'IN7	NC
+	'OUT1	System Status
+	'OUT2	Homing Complete
+	
+	'Setting parameters to the drive
+	DRV.OPMODE = 2											'sets drive to position mode
+	DRV.CMDSOURCE = 5										'sets drive to program run mode
+	UNIT.PROTARY = 4										'sets units to 16bit per rev
+	IL.LIMITN = -5											'sets the neg direction current limit
+	IL.LIMITP = 5											'sets the pos direction current limit
+	INTR.DIN4HI = 1											'enables interrupt when input 4 goes hi
+	DOUT1.STATEU = 0										'initial clear of the ready signal
+	DOUT2.STATEU = 0										'initial clear of the home signal 
+	
+	'Homing varibles
+	HomeSpeed = 500										'speed of homing in drive units  Dante changed to 500, was 2000
+	HomingAccel = 1000										'accerleration in drive units
+	HomingDecel = 8000										'deceleration in drive units
+	HomeDir = 1												'system direction when homing
+	BackoffSpeed = HomeSpeed / 4							'1/4 of the homing speed
+	HomeOffset = 1000000									'offset in drive units
+	
+	'Normal operation varibles
+	accel = 10000											'accerleration in drive units
+	decel = 10000											'deceleration in drive units
+	SystemSpeed = 1000										'set normal operation speed Dante changed to 1000, was 2500
+	abort = 0												'abort flag
+	
+	'Analog interpolation varibles
+	volt_Low = 0
+	volt_High = 10
+	Amp_Low = 0
+	Amp_High = 3.5
+	
+	'Set position locations for final actuator location
+	pos0 = 0
+	pos1 = 100
+
+	DRV.SWENABLE = 1										'enable the drive
+	While DRV.ACTIVE = 0 : Wend								'wait here until system is enabled
+	
+	'Pause(5)												'waits 5 seconds
+End Sub
+
+'routine to home the system
+Sub HomeSystem
+	MOVE.ACC = homingaccel
+	MOVE.DEC = homingdecel
+
+	Print "Waiting to Home"
+	DOUT1.STATEU = 1										'sets the ready signal
+	DOUT2.STATEU = 0										'clears the home signal
+		
+	While DIN1.STATE = 0 : Wend								'waits here until start button is pressed
+	While DIN1.STATE = 1 : Wend								'waits here until start button is released
+	Print "System Homing"
+	
+	DOUT2.STATEU = 0										'clear the ready signal
+	
+	'Starts to find home	
+	MOVE.RUNSPEED = HomeSpeed
+	MOVE.DIR = HomeDir
+	MOVE.GOVEL
+	
+	While DIN6.STATE = 1:
+		If abort = 1 Then Exit Sub
+	Wend
+	
+	If HomeDir = 1 then MOVE.DIR = 0 else MOVE.DIR = 1		'moves in the oposite direction
+	MOVE.RUNSPEED = BackoffSpeed
+	MOVE.GOVEL
+	While DIN6.STATE = 0:
+		If abort = 1 Then Exit Sub
+	Wend
+	
+	'Stops the motor
+	MOVE.RUNSPEED = 0
+	MOVE.GOVEL
+	
+	while MOVE.INPOSITION = 0 : wend						'waits until the motor is stopped
+	'Print PL.FB 'remove me this is for debugging
+	'Performs the offset move and sets system to normal operating speeds
+	MOVE.ACC = accel										'sets the accel
+	MOVE.DEC = decel										'sets the decel
+	MOVE.RUNSPEED = SystemSpeed								'sets the drive to normal run speed
+	MOVE.TARGETPOS = HomeOffset								'sets the offset distance	
+	MOVE.GOREL												'starts the move
+	
+	while MOVE.INPOSITION = 0 : wend
+	
+	'Print PL.FB 'remove me this is for debugging
+	MOVE.POSCOMMAND = 0										'Sets 0 location
+	Print "Homing Completed"
+	
+	DOUT1.STATEU = 1										'sets the ready flag
+	DOUT2.STATEU = 1										'sets the home signal
+End Sub
+
+
+
+Sub ThreePOS
+
+While  DIN3.STATE=1:wend
+
+MOVE.TARGETPOS=(2500000)
+MOVE.RUNSPEED=(SystemSpeed)
+MOVE.GOABS
+
+Pause(2)
+
+WHILE DIN2.State = 1 :WEND
+
+MOVE.TARGETPOS=(4500000)
+MOVE.RUNSPEED=(SystemSpeed)
+MOVE.GOABS
+
+Pause(2)
+
+WHILE DIN2.State = 1 :WEND
+
+MOVE.TARGETPOS=(6500000)
+MOVE.RUNSPEED=(SystemSpeed)
+MOVE.GOABS
+
+Pause(2)
+
+WHILE DIN2.State = 1 :WEND
+
+
+
+MOVE.TARGETPOS=(1000000)
+MOVE.RUNSPEED=(HomeSpeed)
+MOVE.GOABS
+
+If abort = 0 Then
+		MOVE.RUNSPEED = 0
+		MOVE.GOVEL
+		Pause(1)												'waits 1 second
+	
+		MOVE.TARGETPOS = 0
+		MOVE.RUNSPEED = SystemSpeed 
+		MOVE.GOABS
+	
+		while MOVE.INPOSITION = 0:								'waits until the motor is stopped
+			If abort = 1 Then Exit Sub
+		wend
+	End If
+
+End Sub 
+
+
+'Interrupt Routine
+Interrupt DIN4HI
+	MOVE.ABORT
+	abort = 1
+End Interrupt
