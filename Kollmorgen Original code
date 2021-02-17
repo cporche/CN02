@@ -1,0 +1,424 @@
+REM Uploaded from Canoo on 2/1/2021 4:53:25 PM
+REM #line 0 "C:\Users\Dynamc\Documents\nexex.bas"
+REM Uploaded from Canoo on 12/31/2020 5:21:48 PM
+REM #line 0 "C:\Users\Justin Osborn\Desktop\Nexus\Canoo\2117 Rotor Drop Assembly\PROGRAMS\DRIVE\ARCHIVE\Canoo_DRV_kamantest.bas"
+'-------------- Device Params -----------------------
+Params
+FB1.PIN = 100
+FB1.POUT = 20
+FB1.PUNIT = 0
+FB1.SELECT = -1
+FB2.PIN = 100
+FB2.POUT = 20
+FB2.PUNIT = 0
+FB3.PIN = 100
+FB3.POUT = 20
+FB3.PUNIT = 0
+UNIT.ACCLINEAR = 0
+UNIT.ACCROTARY = 0
+UNIT.LABEL = "PIN/POUT"
+UNIT.PIN = 100
+UNIT.PLINEAR = 0
+UNIT.POUT = 20
+UNIT.PROTARY = 4
+UNIT.VLINEAR = 0
+UNIT.VROTARY = 0
+AIN.CUTOFF = 5001.216
+AIN.DEADBAND = 0.000
+AIN.DEADBANDMODE = 0
+AIN.ISCALE = 0.170
+AIN.MODE = 1
+AIN.OFFSET = -0.046
+AIN.PSCALE = 0.000
+AIN.VSCALE = 0.060
+AOUT.DEBUGADDR = 4
+AOUT.DEBUGDATATYPE = 0
+AOUT.DEBUGSCALE = 1.000
+AOUT.ISCALE = 1.000
+AOUT.MODE = 4
+AOUT.OFFSET = 0.000
+AOUT.PSCALE = 0.000
+AOUT.VSCALE = 0.060
+CAP0.EDGE = 1
+CAP0.EN = 0
+CAP0.EVENT = 0
+CAP0.FILTER = 0
+CAP0.MODE = 0
+CAP0.PREEDGE = 1
+CAP0.PREFILTER = 0
+CAP0.PRESELECT = 0
+CAP0.TRIGGER = 0
+CAP1.EDGE = 1
+CAP1.EN = 0
+CAP1.EVENT = 0
+CAP1.FILTER = 0
+CAP1.MODE = 0
+CAP1.PREEDGE = 1
+CAP1.PREFILTER = 0
+CAP1.PRESELECT = 0
+CAP1.TRIGGER = 0
+CS.DEC = 10000.170
+CS.TO = 6
+CS.VTHRESH = 5.000
+DIN1.FILTER = 1
+DIN1.INV = 0
+DIN1.MODE = 0
+DIN2.FILTER = 1
+DIN2.INV = 0
+DIN2.MODE = 0
+DIN3.FILTER = 2
+DIN3.INV = 0
+DIN3.MODE = 0
+DIN4.FILTER = 2
+DIN4.INV = 1
+DIN4.MODE = 0
+DIN5.FILTER = 2
+DIN5.INV = 0
+DIN5.MODE = 18
+DIN6.FILTER = 2
+DIN6.INV = 0
+DIN6.MODE = 19
+DIN7.FILTER = 2
+DIN7.INV = 0
+DIN7.MODE = 0
+DIO10.DIR = 0
+DIO10.INV = 0
+DIO11.DIR = 0
+DIO11.INV = 0
+DIO9.DIR = 0
+DIO9.INV = 0
+DOUT.RELAYMODE = 1
+DOUT1.MODE = 8
+DOUT1.PARAM = 0.000
+DOUT2.MODE = 0
+DOUT2.PARAM = 0.000
+DRV.ACC = 10000.170
+DRV.CMDSOURCE = 5
+DRV.DBILIMIT = 1.000
+DRV.DEC = 10000.170
+DRV.DIR = 1
+DRV.DISTO = 1000
+DRV.EMUEDIR = 0
+DRV.EMUEMODE = 0
+DRV.EMUEMTURN = 0
+DRV.EMUERES = 0
+DRV.EMUEZOFFSET = 47522
+DRV.HANDWHEELSRC = 2
+DRV.NAME = "Canoo"
+DRV.OPMODE = 2
+FAULT130.ACTION = 0
+FAULT131.ACTION = 0
+FAULT132.ACTION = 0
+FAULT134.ACTION = 0
+FAULT451.ACTION = 0
+FAULT702.ACTION = 0
+FB1.BISSBITS = 32
+FB1.ENCRES = 1024
+FB1.INITSIGNED = 1
+FB1.OFFSET = 0
+FB1.ORIGIN = 0
+FB1.PDIR = 0
+FB1.POFFSET = 0
+FB1.POLES = 2
+FB1.PSCALE = 20
+FB2.DIR = 0
+FB2.ENCRES = 0
+FB2.MODE = 0
+FB2.POFFSET = 0
+FB2.SOURCE = 0
+FB3.MODE = 0
+FB3.PDIR = 0
+FB3.POFFSET = 0
+IL.FOLDWTHRESH = 0.000
+IL.KACCFF = 0.000
+IL.KP = 50.009
+IL.LIMITN = -4.999
+IL.LIMITP = 5.000
+IL.OFFSET = 0.008
+LOAD.INERTIA = 0.000
+MOTOR.BRAKEIMM = 0
+MOTOR.PITCH = 32.000
+MOTOR.TBRAKETO = -1
+MOTOR.TEMPWARN = 0
+PL.ERRFTHRESH = 0
+PL.ERRMODE = 0
+PL.ERRWTHRESH = 0
+PL.FBSOURCE = 0
+PL.INTINMAX = 61035
+PL.INTOUTMAX = 61035
+PL.KI = 0.000
+PL.KP = 55.457
+PL.MODP2 = 1048576
+PL.MODPDIR = 0
+PL.MODPEN = 0
+PLS.EN = 0
+PLS.MODE = 0
+PLS.P1 = 0
+PLS.P2 = 0
+PLS.P3 = 0
+PLS.P4 = 0
+PLS.P5 = 0
+PLS.P6 = 0
+PLS.P7 = 0
+PLS.P8 = 0
+PLS.T1 = 500
+PLS.T2 = 500
+PLS.T3 = 500
+PLS.T4 = 500
+PLS.T5 = 500
+PLS.T6 = 500
+PLS.T7 = 500
+PLS.T8 = 500
+PLS.UNITS = 0
+PLS.WIDTH1 = 0
+PLS.WIDTH2 = 0
+PLS.WIDTH3 = 0
+PLS.WIDTH4 = 0
+PLS.WIDTH5 = 0
+PLS.WIDTH6 = 0
+PLS.WIDTH7 = 0
+PLS.WIDTH8 = 0
+REGEN.REXT = 330
+REGEN.TEXT = 100.000
+REGEN.TYPE = 0
+REGEN.WATTEXT = 1000
+SWLS.EN = 0
+SWLS.LIMIT0 = 0
+SWLS.LIMIT1 = 1048576
+VBUS.OVWTHRESH = 0
+VBUS.UVFTHRESH = 90
+VBUS.UVMODE = 1
+VBUS.UVWTHRESH = 100
+VL.ARPF1 = 13.378
+VL.ARPF2 = 500.000
+VL.ARPF3 = 1656.315
+VL.ARPF4 = 1656.315
+VL.ARPQ1 = 0.707
+VL.ARPQ2 = 0.500
+VL.ARPQ3 = 0.707
+VL.ARPQ4 = 0.707
+VL.ARTYPE1 = 5
+VL.ARTYPE2 = 5
+VL.ARTYPE3 = 5
+VL.ARTYPE4 = 5
+VL.ARZF1 = 33.604
+VL.ARZF2 = 500.000
+VL.ARZF3 = 5000.000
+VL.ARZF4 = 5000.000
+VL.ARZQ1 = 0.707
+VL.ARZQ2 = 0.500
+VL.ARZQ3 = 0.707
+VL.ARZQ4 = 0.707
+VL.FBSOURCE = 0
+VL.GENMODE = 0
+VL.KBUSFF = 0.000
+VL.KI = 8.324
+VL.KP = 0.810
+VL.KVFF = 1.000
+VL.LIMITN = -3000.000
+VL.LIMITP = 3000.000
+VL.LMJR = 0.000
+VL.THRESH = 7219.166
+WS.DISTMAX = 2731
+WS.DISTMIN = 182
+WS.FREQ = 10.000
+WS.IMAX = 4.500
+WS.MODE = 0
+WS.NUMLOOPS = 5
+WS.T = 2
+WS.TDELAY1 = 5
+WS.TDELAY2 = 50
+WS.TDELAY3 = 100
+WS.VTHRESH = 100.000
+End Params
+
+'-------------- Define (dim) Global Variables --------
+Dim HomeSpeed, BackoffSpeed, HomeDir, HomeOffset as integer
+Dim accel, HomingAccel as integer
+Dim decel, HomingDecel as integer
+Dim pos0, pos1 as integer
+Dim SystemSpeed, abort as integer
+Dim volt_Low, volt_High, Amp_Low, Amp_High as float
+Dim Amp_Out, A_In as float
+alias HOME_SYSTEM = (DIN1.STATE = 1)
+alias START_PRESS = (DIN2.State = 1)
+alias RETURN_PRESS = (DIN3.State = 1)
+
+'-------------- Main Program -------------------------
+Main
+	DRV.SWENABLE = 1									'Disable drive while system is starting
+			
+	While(1):
+		Call initSYSTEM									'Inits the drive with all the preset values
+	
+		Call HomeSystem									'Starts the homing routine
+	
+		while(abort = 0):								'forever loop
+			If HOME_SYSTEM Then Call HomeSystem		'Can rehome the system if the customer wants to
+			If START_PRESS Then Call startMOVE	
+		Wend
+	Wend
+End Main
+
+'-------------- Subroutines and Functions ------------
+
+'This is where you edit all the parameters of the system
+Sub initSYSTEM
+	'Edit these for reference on your system
+	'Positive direction is down
+	'IN1	Home System
+	'IN2	Extend Press
+	'IN3	Retract Press
+	'IN4	NC (setup interrupt for stop)
+	'IN5	Pos Limit Sensor
+	'IN6	Neg Limit Sensor
+	'IN7	NC
+	'OUT1	System Status
+	'OUT2	Homing Complete
+	
+	'Setting parameters to the drive
+	DRV.OPMODE = 2											'sets drive to position mode
+	DRV.CMDSOURCE = 5										'sets drive to program run mode
+	UNIT.PROTARY = 4										'sets units to 16bit per rev
+	IL.LIMITN = -5											'sets the neg direction current limit
+	IL.LIMITP = 5											'sets the pos direction current limit
+	INTR.DIN4HI = 1											'enables interrupt when input 4 goes hi
+	DOUT1.STATEU = 0										'initial clear of the ready signal
+	DOUT2.STATEU = 0										'initial clear of the home signal 
+	
+	'Homing varibles
+	HomeSpeed = 500										'speed of homing in drive units  Dante changed to 500, was 2000
+	HomingAccel = 1000										'accerleration in drive units
+	HomingDecel = 8000										'deceleration in drive units
+	HomeDir = 1												'system direction when homing
+	BackoffSpeed = HomeSpeed / 4							'1/4 of the homing speed
+	HomeOffset = 1000000									'offset in drive units
+	
+	'Normal operation varibles
+	accel = 10000											'accerleration in drive units
+	decel = 10000											'deceleration in drive units
+	SystemSpeed = 1000										'set normal operation speed Dante changed to 1000, was 2500
+	abort = 0												'abort flag
+	
+	'Analog interpolation varibles
+	volt_Low = 0
+	volt_High = 10
+	Amp_Low = 0
+	Amp_High = 3.5
+	
+	'Set position locations for final actuator location
+	pos0 = 0
+	pos1 = 100
+
+	DRV.SWENABLE = 1										'enable the drive
+	While DRV.ACTIVE = 0 : Wend								'wait here until system is enabled
+	
+	'Pause(5)												'waits 5 seconds
+End Sub
+
+'routine to home the system
+Sub HomeSystem
+	MOVE.ACC = homingaccel
+	MOVE.DEC = homingdecel
+
+	Print "Waiting to Home"
+	DOUT1.STATEU = 1										'sets the ready signal
+	DOUT2.STATEU = 0										'clears the home signal
+		
+	While DIN1.STATE = 0 : Wend								'waits here until start button is pressed
+	While DIN1.STATE = 1 : Wend								'waits here until start button is released
+	Print "System Homing"
+	
+	DOUT2.STATEU = 0										'clear the ready signal
+	
+	'Starts to find home	
+	MOVE.RUNSPEED = HomeSpeed
+	MOVE.DIR = HomeDir
+	MOVE.GOVEL
+	
+	While DIN6.STATE = 1:
+		If abort = 1 Then Exit Sub
+	Wend
+	
+	If HomeDir = 1 then MOVE.DIR = 0 else MOVE.DIR = 1		'moves in the oposite direction
+	MOVE.RUNSPEED = BackoffSpeed
+	MOVE.GOVEL
+	While DIN6.STATE = 0:
+		If abort = 1 Then Exit Sub
+	Wend
+	
+	'Stops the motor
+	MOVE.RUNSPEED = 0
+	MOVE.GOVEL
+	
+	while MOVE.INPOSITION = 0 : wend						'waits until the motor is stopped
+	'Print PL.FB 'remove me this is for debugging
+	'Performs the offset move and sets system to normal operating speeds
+	MOVE.ACC = accel										'sets the accel
+	MOVE.DEC = decel										'sets the decel
+	MOVE.RUNSPEED = SystemSpeed								'sets the drive to normal run speed
+	MOVE.TARGETPOS = HomeOffset								'sets the offset distance	
+	MOVE.GOREL												'starts the move
+	
+	while MOVE.INPOSITION = 0 : wend
+	
+	'Print PL.FB 'remove me this is for debugging
+	MOVE.POSCOMMAND = 0										'Sets 0 location
+	Print "Homing Completed"
+	
+	DOUT1.STATEU = 1										'sets the ready flag
+	DOUT2.STATEU = 1										'sets the home signal
+End Sub
+
+'Function that controls the moving of the actuator
+Sub startMOVE
+	Dim following_error as integer
+	following_error = PL.ERRFTHRESH
+	PL.ERRFTHRESH = 0
+	
+	While DIN2.STATE = 1 : Wend								'waits here until start button is released
+	Print "Extend Pressed"
+	DOUT1.STATEU = 0										'clears system ready
+	A_In = AIN.VALUE
+	'Amp_Out = (((A_In - volt_Low) * (Amp_High - Amp_Low)) / (volt_High - volt_Low)) + Amp_Low
+	If A_In > Amp_High Then
+		A_In = Amp_High
+	End If
+	
+	IL.LIMITP = A_In
+															'sets drive to velocity mode
+	MOVE.RUNSPEED = SystemSpeed	* 2						'sets the speed
+	MOVE.GOVEL
+	
+	Pause(1)												'waits 1 second so you dont false trigger
+	
+	while ABS(VL.FB) > 10:
+		If abort = 1 Then Exit Sub
+	wend
+	
+	If abort = 0 Then
+		MOVE.RUNSPEED = 0
+		MOVE.GOVEL
+		Pause(1)												'waits 1 second
+	
+		MOVE.TARGETPOS = 0
+		MOVE.RUNSPEED = SystemSpeed 
+		MOVE.GOABS
+	
+		while MOVE.INPOSITION = 0:								'waits until the motor is stopped
+			If abort = 1 Then Exit Sub
+		wend
+	End If
+	
+	PL.ERRFTHRESH = following_error
+	DOUT1.STATEU = 1										'sets system ready
+End Sub
+
+'Interrupt Routine
+Interrupt DIN4HI
+	MOVE.ABORT
+	abort = 1
+End Interrupt
+
+
+
